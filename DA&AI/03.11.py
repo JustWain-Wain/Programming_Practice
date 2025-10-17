@@ -10,3 +10,6 @@ classifier(
         "I hate this so much!",
     ]
 )
+classifier = pipeline("text-classification",
+                     model="DeepPavlov/distilrubert-small-cased-conversational")
+results = classifier("Эта игра просто великолепна!")
