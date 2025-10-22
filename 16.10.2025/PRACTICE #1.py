@@ -9,7 +9,7 @@ class Employee:
         self.coefficient = 1
 
     def salary(self):
-        return self.coefficient * (self.experience + 1) * 4600
+        return int(self.coefficient * (self.experience/10 + 1) * 30000)
 
 class Manager(Employee):
     def __init__(self, name, age, experience):
@@ -23,5 +23,7 @@ class Developer(Employee):
         self.experience = experience
         self.coefficient = 1.2
 
-dev = Developer("", 25, 15)
+dev = Developer("Antony", 27, 6)
+man = Manager("John", 31, 11)
 print(dev.salary())
+print(man.salary())
