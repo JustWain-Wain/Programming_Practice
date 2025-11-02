@@ -25,7 +25,7 @@ def add(items, title, item_amount, expiration_date=None):
         > print(goods["Вода"])
         [{'amount': Decimal('52'), 'expiration_date': datetime.date(2025, 10, 15)}]
     """
-    title = title.capitalize()
+    title = title.title()
     exp_date = None
     if expiration_date is not None:
         expiration_date = expiration_date.split("-")
@@ -58,12 +58,16 @@ def add_by_note(items, note):
         {'Ягоды': [{'amount': Decimal('55'), 'expiration_date': None}]}
     """
     note = note.split()
-    title = note[0]
-    item_amount = Decimal(note[1])
-    if len(note) == 2 or note[-1] == '':
+    if len(note) == 2:
+        title = note[0]
+        item_amount = Decimal(note[-1])
+    else:
+        title = " ".join(note[:-2])
+        item_amount = Decimal(note[-2])
+    if len(note) <= 2 or note[-1] == '':
         expiration_date = None
     else:
-        expiration_date = note[2]
+        expiration_date = note[-1]
     add(items, title, item_amount, expiration_date)
 
 def find(items, needle):
@@ -119,12 +123,3 @@ def amount(items, needle):
     return Decimal(counter)
 
 goods = {}
-
-add(goods, "Вода", 3)
-add_by_note(goods, "Мясо 10 2025-11-15")
-add_by_note(goods, "Вода 7")
-add_by_note(goods, "Мясо 2 2025-11-16")
-print(find(goods, 'о'))
-print(amount(goods, "Мясо"))
-print(amount(goods, "Вода"))
-print(goods)
